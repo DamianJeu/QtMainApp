@@ -66,7 +66,7 @@ void Client::sendDataToServer(const QByteArray &data)
     socket.write(data);
     socket.flush();
     socket.waitForBytesWritten();
-    qDebug() << "Data sent: " << data;
+  //  qDebug() << "Data sent: " << data;
 
 }
 
@@ -77,7 +77,7 @@ void Client::readyRead()
 
 
     QByteArray data = socket.readAll();
-    qDebug() << "Data received: " << data;
+  //  qDebug() << "Data received: " << data;
     //emit signal with data received
     emit dataReceived(data);
 

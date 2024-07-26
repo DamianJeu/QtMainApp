@@ -40,6 +40,9 @@ private:
 
     quint16 m_xValue;
     quint16 m_yValue;
+
+    quint16 m_yMaxDetectecValue;
+    quint16 m_yMinDetectecValue;
 };
 
 #endif // CHART_H

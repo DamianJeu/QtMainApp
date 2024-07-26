@@ -98,20 +98,20 @@ void MainWindow::on_pushButtonStopData_clicked()
 }
 
 double extractField(const QString &data, const QString &fieldName) {
-    // Create a regex pattern for the field
+
     QString pattern = fieldName + R"(\s*:\s*([\d\.]+))";
     QRegularExpression regex(pattern);
 
-    // Match the regex against the data
+
     QRegularExpressionMatch match = regex.match(data);
 
-    // If a match is found, convert the captured value to double and return it
+
     if (match.hasMatch()) {
         QString fieldValue = match.captured(1);
         return fieldValue.toDouble();
     }
 
-    return -1; // Return an invalid value if the field is not found
+    return -1;
 }
 
 //SRC:   218 2021-10-17 08:16:51.618 UWB CNT: 10, DSTR: false,
