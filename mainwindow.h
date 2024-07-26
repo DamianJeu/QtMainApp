@@ -4,12 +4,21 @@
 #include <QMainWindow>
 #include "client.h"
 #include <QTimer>
+#include "dataparser.h"
+#include "chart.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
 }
 QT_END_NAMESPACE
+
+
+enum class DataType
+{
+    Pressure,
+    Temperature
+};
 
 class MainWindow : public QMainWindow
 {
@@ -32,12 +41,24 @@ private slots:
 
     void on_pushButtonStopData_clicked();
 
+    void receiveParsedData(const QString &data);
+
+    void on_pushButtonCleanLogs_clicked();
+
+    void on_pushButtonPressure_clicked();
+
+    void on_pushButtonTemperature_clicked();
+
 private:
     Ui::MainWindow *ui;
 
 
     Client *client;
     QTimer *timer;
+    DataParser *parser;
+    Chart *chart;
+
+    DataType dataType;
 
 
 };

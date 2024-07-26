@@ -20,12 +20,16 @@ public:
 
 signals:
 
+    void dataReceived(const QByteArray &data);
+
 public slots:
 
 
     void connectToServer();
     void disconnectFromServer();
     void sendDataToServer(const QByteArray &data);
+
+
 
 private slots:
 

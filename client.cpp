@@ -79,6 +79,7 @@ void Client::readyRead()
     QByteArray data = socket.readAll();
     qDebug() << "Data received: " << data;
     //emit signal with data received
+    emit dataReceived(data);
 
 }
 
