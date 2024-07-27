@@ -1,8 +1,8 @@
 #include "chart.h"
 
 Chart::Chart(QWidget *parent, QHBoxLayout *layout)
-    : QWidget{parent}, chart{new QChart()}, series{new QLineSeries()}, axisX{new QValueAxis()}, axisY{new QValueAxis()},
-    chartView{new QChartView(chart)}, layout{layout}, m_xValue{0}, m_yValue{0}, m_yMaxDetectecValue{0}, m_yMinDetectecValue{0}
+    : QWidget{parent}, chart{new QChart()}, series{new QLineSeries(chart)}, axisX{new QValueAxis(chart)}, axisY{new QValueAxis(chart)},
+    chartView{new QChartView(chart, this)}, layout{layout}, m_xValue{0}, m_yValue{0}, m_yMaxDetectecValue{0}, m_yMinDetectecValue{0}
 {
 
     chart->legend()->hide();
@@ -11,6 +11,9 @@ Chart::Chart(QWidget *parent, QHBoxLayout *layout)
     chart->addSeries(series);
 
     axisX->setMax(100);
+    axisY->setTickCount(10);
+
+    axisX->setTickCount(10);
     axisX->setTitleText("Odczyt");
 
 
@@ -18,12 +21,18 @@ Chart::Chart(QWidget *parent, QHBoxLayout *layout)
     series->attachAxis(axisY);
 
     chart->addAxis(axisX, Qt::AlignBottom);
+    series->setColor(Qt::red);
     series->attachAxis(axisX);
     chartView->setRenderHint(QPainter::Antialiasing);
 
     layout->addWidget(chartView);
 
 
+}
+
+Chart::~Chart()
+{
+    delete chart;
 }
 
 void Chart::clearChart()
@@ -58,20 +67,22 @@ void Chart::addNewSample(double point)
 
 
 
-    if(m_xValue==0 || point <= m_yMinDetectecValue)
+    if(!m_xValue || point <= m_yMinDetectecValue)
     {
         m_yMinDetectecValue = point;
-       // if(!m_xValue)axisY->setMin(point);
+        if(!m_xValue)axisY->setMin(point);
 
     }
 
-    if(m_xValue==0 || point >= m_yMaxDetectecValue)
+    if(point >= m_yMaxDetectecValue)
     {
         m_yMaxDetectecValue = point;
-       // if(!m_xValue)axisY->setMax(point);
+        // if(!m_xValue)axisY->setMax(point);
     }
 
     difference = m_yMaxDetectecValue - m_yMinDetectecValue;
+
+
 
     if(m_xValue >= axisX->max())
     {
@@ -80,15 +91,21 @@ void Chart::addNewSample(double point)
     }
 
 
-    if(point >= axisY->max())
+    if(point > axisY->max())
     {
-        qDebug()<<"difference "<<point <<" minValue:"<<m_yMinDetectecValue<<" MaxValue:"<<m_yMaxDetectecValue<< " point:"<<point;
-        axisY->setMax(point+100);
-        axisY->setMin(m_yMinDetectecValue);
+
+        axisY->setMax(point+(difference/10));
+
+
+    }
+
+    if(point<axisY->min())
+    {
+        axisY->setMin(point-(difference/10));
     }
 
 
-
+    axisY->setTickInterval(difference);
 
     m_xValue++;
 

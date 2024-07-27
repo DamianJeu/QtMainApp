@@ -93,6 +93,7 @@ void Client::disconnected()
 {
 
     qDebug() << "Disconnected from server";
+    emit disconnectedFromServer();
 
 }
 
@@ -128,5 +129,11 @@ QHostAddress Client::host() const
 void Client::setHost(const QHostAddress &newHost)
 {
     m_host = newHost;
+
+}
+
+bool Client::isConnected() const
+{
+    return (socket.state() == QAbstractSocket::ConnectedState)? true : false;
 
 }

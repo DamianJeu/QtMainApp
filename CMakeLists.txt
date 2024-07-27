@@ -26,6 +26,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         client.h client.cpp
         dataparser.h dataparser.cpp
         chart.h chart.cpp
+        Lowpass/lowpassfilter.h Lowpass/lowpassfilter.cpp
+        Algorithm/floor_algorithm.h Algorithm/floor_algorithm.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET QtMainApp APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

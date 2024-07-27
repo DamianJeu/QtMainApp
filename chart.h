@@ -14,11 +14,14 @@ class Chart : public QWidget
     Q_OBJECT
 public:
     explicit Chart(QWidget *parent, QHBoxLayout *layout);
+    ~Chart();
 
     quint16 xValue() const;
     void setXValue(quint16 newXValue);
 
 signals:
+    void  newMaxYDetected(double maxY);
+    void newMinYDetected(double minY);
 
 public slots:
 
@@ -38,11 +41,11 @@ private:
     QHBoxLayout *layout;
 
 
-    quint16 m_xValue;
-    quint16 m_yValue;
+    quint64 m_xValue;
+    quint64 m_yValue;
 
-    quint16 m_yMaxDetectecValue;
-    quint16 m_yMinDetectecValue;
+    quint64 m_yMaxDetectecValue;
+    quint64 m_yMinDetectecValue;
 };
 
 #endif // CHART_H

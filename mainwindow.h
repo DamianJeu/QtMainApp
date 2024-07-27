@@ -6,6 +6,7 @@
 #include <QTimer>
 #include "dataparser.h"
 #include "chart.h"
+#include "Algorithm/floor_algorithm.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -49,6 +50,12 @@ private slots:
 
     void on_pushButtonTemperature_clicked();
 
+    void on_pushButtonAlgorithmUpdate_clicked();
+
+    void on_pushButtonAlgorithmReset_clicked();
+
+    void on_checkBoxLowpassFilter_stateChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
 
@@ -57,8 +64,10 @@ private:
     QTimer *timer;
     DataParser *parser;
     Chart *chart;
+    FloorAlgorithm *floorAlgorithm;
 
     DataType dataType;
+    bool lowpassFilterEnabled;
 
 
 };

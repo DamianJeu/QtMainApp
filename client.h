@@ -15,12 +15,15 @@ public:
     QHostAddress host() const;
     void setHost(const QHostAddress &newHost);
 
+    bool isConnected() const;
+
     quint16 port() const;
     void setPort(quint16 newPort);
 
 signals:
 
     void dataReceived(const QByteArray &data);
+    void disconnectedFromServer();
 
 public slots:
 
