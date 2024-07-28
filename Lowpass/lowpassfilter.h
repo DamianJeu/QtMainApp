@@ -23,7 +23,7 @@ signals:
 
 public slots:
 
-    void changeAlpha(double newAlpha);
+    void setAlpha(double newAlpha);
     double calculateLowPassFilter(double newValue , double previousFilteredValue);
 
 protected:

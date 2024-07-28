@@ -9,7 +9,7 @@ LowPassFilter::LowPassFilter(QObject *parent)
 
 }
 
-void LowPassFilter::changeAlpha(double newAlpha)
+void LowPassFilter::setAlpha(double newAlpha)
 {
     alpha = newAlpha;
 }

@@ -29,6 +29,10 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void stopTimer();
+    void startTimer(quint16 interval);
+    void addFloorToLogs(double pressure, double filteredPressure, QString & data);
+
 private slots:
     void on_pushButtonConnect_clicked();
 
@@ -64,6 +68,16 @@ private slots:
 
     void on_doubleSpinBoxYMin_valueChanged(double arg1);
 
+
+    void clientConnected();
+    void clientDisconnected();
+    void addErrorToLogs(const QString &error);
+
+    void on_pushButtonCleanLogsFloor_clicked();
+
+
+    void on_pushButtonSimPtrReset_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -76,10 +90,12 @@ private:
     Chart *chart2;
     FloorAlgorithm *floorAlgorithm;
 
+
     DataType dataType;
     bool lowpassFilterEnabled;
 
     double lastFilteredData;
+    double lastAlgorithmData;
 
 
 

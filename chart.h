@@ -33,6 +33,8 @@ public slots:
 
     void addNewSample2(double point);
 
+    void addScatterSample(double y);
+
 
 private:
 
@@ -44,6 +46,7 @@ private:
     QValueAxis *axisY;
     QChartView *chartView;
     QHBoxLayout *layout;
+    QScatterSeries *scatterSeries;
 
 
     quint64 m_xValue;

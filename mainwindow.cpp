@@ -8,19 +8,16 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-
     client = new Client(this);
     timer = new QTimer(this);
     parser = new DataParser(this);
     floorAlgorithm = new FloorAlgorithm(this);
 
     QHBoxLayout *layout = new QHBoxLayout(ui->frameChart);
-
     QHBoxLayout *layout2 = new QHBoxLayout(ui->frameChartFilter);
 
     chart = new Chart(this, layout );
     chart2 = new Chart(this, layout2 );
-
 
     connect(timer, &QTimer::timeout, this, &MainWindow::sendData, Qt::AutoConnection);
     connect(client, &Client::dataReceived, parser, &DataParser::dataReceived, Qt::AutoConnection);
@@ -28,15 +25,17 @@ MainWindow::MainWindow(QWidget *parent)
     connect(client, &Client::disconnectedFromServer, this, &MainWindow::on_pushButtonStopData_clicked, Qt::AutoConnection);
     connect(chart, &Chart::newMaxYDetected, this, &MainWindow::newMaxYDetected, Qt::AutoConnection);
     connect(chart, &Chart::newMinYDetected, this, &MainWindow::newMinYDetected, Qt::AutoConnection);
+    connect(client, &Client::connectedToServer, this, &MainWindow::clientConnected, Qt::AutoConnection);
+    connect(client, &Client::disconnectedFromServer, this, &MainWindow::clientDisconnected, Qt::AutoConnection);
+    connect(parser, &DataParser::endOfData, this, &MainWindow::on_pushButtonStopData_clicked, Qt::DirectConnection);
+    connect(client, &Client::errorSignal, this, &MainWindow::addErrorToLogs, Qt::AutoConnection);
 
-    //connect
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-
-
 }
 
 void MainWindow::on_pushButtonConnect_clicked()
@@ -44,8 +43,6 @@ void MainWindow::on_pushButtonConnect_clicked()
     client->setHost(QHostAddress(ui->lineEditIp->text()));
     client->setPort(ui->spinBoxPort->text().toUShort());
     client->connectToServer();
-
-
 }
 
 
@@ -77,9 +74,9 @@ void MainWindow::on_pushButtonStartData_clicked()
         if(timer->isActive())
         {
             qDebug() << "Timer is already active, changing frequency";
-            timer->stop();
+            stopTimer();
         }
-        timer->start(period);
+        startTimer(period);
 
         qDebug() << "Frequency:"<< frequency << ", Period:" << period;
     }
@@ -93,7 +90,7 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::sendData()
 {
-    client->sendDataToServer("Hello, world!");
+    client->sendDataToServer("Give me data!");
 }
 
 
@@ -103,7 +100,7 @@ void MainWindow::on_pushButtonStopData_clicked()
 
     if(timer->isActive())
     {
-        timer->stop();
+        stopTimer();
         qDebug() << "Timer stopped";
     }
     else
@@ -121,28 +118,47 @@ void MainWindow::receiveParsedData(ParsedData data)
 {
     ui->textBrowser->append(QString::number(data.pressure) + "[Pa], " + QString::number(data.temperature) + "[°C] ");
 
-
+    if(data.pressure<0)
+    {
+        qDebug() << "Negative pressure detected!";
+        return;
+    }
     if(dataType == DataType::Pressure)
     {
         if(lowpassFilterEnabled)
         {
             if(!firstSample)
             {
-                firstSample = 1;
+
                 lastFilteredData = data.pressure;
                 qDebug() << "First sample:" << lastFilteredData;
             }
 
             lastFilteredData = floorAlgorithm->calculateLowPassFilter(data.pressure,lastFilteredData);
+            bool floorChanged = floorAlgorithm->detectFloorChange(lastAlgorithmData,lastFilteredData);
 
-            chart->addNewSample2(lastFilteredData);
-            chart2->addNewSample(lastFilteredData);
-            chart->addNewSample(data.pressure);
+            if(floorChanged && firstSample)
+            {
+                addFloorToLogs(data.pressure, lastFilteredData, data.dataTime);
+
+                lastAlgorithmData = lastFilteredData;
+                chart->addScatterSample(lastFilteredData);
+                chart2->addScatterSample(lastFilteredData);
+
+            }else
+            {
+                chart->addNewSample2(lastFilteredData);
+                chart2->addNewSample(lastFilteredData);
+                chart->addNewSample(data.pressure);
+            }
+
         }
         else
         {
             chart->addNewSample(data.pressure);
         }
+
+        if(!firstSample)firstSample=1;
 
     }
     else if(dataType == DataType::Temperature)
@@ -185,11 +201,11 @@ void MainWindow::on_pushButtonPressure_clicked()
 {
     firstSample = 0;
     lastFilteredData=0;
+    lastAlgorithmData = 0;
 
     chart->changeSeries();
     chart2->changeSeries();
     dataType = DataType::Pressure;
-
 }
 
 
@@ -197,6 +213,7 @@ void MainWindow::on_pushButtonTemperature_clicked()
 {
     firstSample = 0;
     lastFilteredData=0;
+    lastAlgorithmData = 0;
     chart->changeSeries();
     chart2->changeSeries();
     dataType = DataType::Temperature;
@@ -208,11 +225,10 @@ void MainWindow::on_pushButtonAlgorithmUpdate_clicked()
     double alpha = ui->doubleSpinBoxAlpha->value();
     double sensitivity = ui->doubleSpinBoxSensitivity->value();
 
-    floorAlgorithm->changeAlpha(alpha);
+    floorAlgorithm->setAlpha(alpha);
+    floorAlgorithm->setSensitivity(sensitivity);
 
     qDebug() << "Alpha:" << alpha;
-
-
 }
 
 
@@ -220,6 +236,7 @@ void MainWindow::on_pushButtonAlgorithmReset_clicked()
 {
     firstSample = 0;
     lastFilteredData=0;
+    lastAlgorithmData = 0;
 }
 
 
@@ -228,6 +245,7 @@ void MainWindow::on_checkBoxLowpassFilter_stateChanged(int arg1)
 
     firstSample = 0;
     lastFilteredData=0;
+    lastAlgorithmData = 0;
 
     if(ui->checkBoxLowpassFilter->isChecked())
     {
@@ -239,8 +257,6 @@ void MainWindow::on_checkBoxLowpassFilter_stateChanged(int arg1)
         lowpassFilterEnabled = false;
         qDebug() << "Lowpass filter disabled";
     }
-
-
 }
 
 void MainWindow::newMaxYDetected(double maxY)
@@ -254,7 +270,6 @@ void MainWindow::newMinYDetected(double minY)
 }
 
 
-
 void MainWindow::on_doubleSpinBoxYMax_valueChanged(double arg1)
 {
     chart->setNewMaxY(arg1);
@@ -264,5 +279,70 @@ void MainWindow::on_doubleSpinBoxYMax_valueChanged(double arg1)
 void MainWindow::on_doubleSpinBoxYMin_valueChanged(double arg1)
 {
     chart->setNewMinY(arg1);
+}
+
+void MainWindow::clientConnected()
+{
+    ui->labelConnectionStatus->setText("Connected");
+    ui->labelConnectionStatus->setStyleSheet("QLabel { background-color : green; }");
+}
+
+void MainWindow::clientDisconnected()
+{
+    ui->labelConnectionStatus->setText("Disconnected");
+    ui->labelConnectionStatus->setStyleSheet("QLabel { background-color : default; }");
+}
+
+void MainWindow::addErrorToLogs(const QString &error)
+{
+    ui->textBrowser->setTextColor(QColorConstants::Red);
+    ui->textBrowser->append(error);
+}
+
+
+
+void MainWindow::stopTimer()
+{
+    ui->labelTimerStatus->setText("Stop");
+    ui->labelTimerStatus->setStyleSheet("QLabel { background-color : default; }");
+    timer->stop();
+}
+
+void MainWindow::startTimer(quint16 interval)
+{
+    ui->labelTimerStatus->setText("Working..");
+    ui->labelTimerStatus->setStyleSheet("QLabel { background-color : green; }");
+    timer->start(interval);
+}
+
+void MainWindow::addFloorToLogs(double pressure, double filteredPressure, QString & data)
+{
+
+    if(pressure<0)
+    {
+        qDebug() << "Negative pressure detected!";
+        return;
+    }
+
+    ui->textBrowserFloors->setTextColor(QColorConstants::Green);
+
+    QString floorChangeMsg= "Zmiana piętra!, Ciśnienie:"
+                             + QString::number(pressure) + "[Pa],"
+                             + " Odfiltrowane:" + QString::number(filteredPressure) + "[Pa],"
+                             + " Data:" + data;
+
+    ui->textBrowserFloors->append(floorChangeMsg);
+}
+
+
+void MainWindow::on_pushButtonCleanLogsFloor_clicked()
+{
+    ui->textBrowserFloors->clear();
+}
+
+
+void MainWindow::on_pushButtonSimPtrReset_clicked()
+{
+    client->sendDataToServer("RST");
 }
 

@@ -24,6 +24,9 @@ signals:
 
     void dataReceived(const QByteArray &data);
     void disconnectedFromServer();
+    void connectedToServer();
+    void errorSignal(const QString &error);
+
 
 public slots:
 

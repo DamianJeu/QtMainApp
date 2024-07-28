@@ -11,6 +11,10 @@ public:
     explicit FloorAlgorithm(QObject *parent = nullptr);
     ~FloorAlgorithm();
 
+    bool detectFloorChange(double previousPressure, double currentPressure);
+
+    double getSensitivity() const;
+    void setSensitivity(double newSensitivity);
 
 public slots:
 
@@ -20,7 +24,7 @@ public slots:
 private:
 
 
-
+double sensitivity;
 
 };
 

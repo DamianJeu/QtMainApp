@@ -17,7 +17,7 @@ FloorAlgorithm::~FloorAlgorithm()
 
 }
 
-bool FloorAlgorithm::detectFloorChange(double previousPressure, double currentPressure, double sensitivity)
+bool FloorAlgorithm::detectFloorChange(double previousPressure, double currentPressure)
 {
     double difference = std::abs(currentPressure - previousPressure);
     if (difference > sensitivity) {

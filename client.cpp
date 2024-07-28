@@ -29,7 +29,6 @@ void Client::connectToServer()
 
     if(socket.state() == QAbstractSocket::ConnectedState || socket.isOpen())
     {
-
         qDebug() << "Already connected";
         return;
     }
@@ -47,16 +46,13 @@ void Client::disconnectFromServer()
         return;
     }
 
-
     socket.close();
     socket.waitForDisconnected();
-
 
 }
 
 void Client::sendDataToServer(const QByteArray &data)
 {
-
     if(socket.state() == QAbstractSocket::UnconnectedState)
     {
         qDebug() << "Not connected";
@@ -67,15 +63,12 @@ void Client::sendDataToServer(const QByteArray &data)
     socket.flush();
     socket.waitForBytesWritten();
   //  qDebug() << "Data sent: " << data;
-
 }
 
 
 
 void Client::readyRead()
 {
-
-
     QByteArray data = socket.readAll();
   //  qDebug() << "Data received: " << data;
     //emit signal with data received
@@ -85,21 +78,18 @@ void Client::readyRead()
 
 void Client::connected()
 {
-
     qDebug() << "Connected to server";
+    emit connectedToServer();
 }
 
 void Client::disconnected()
 {
-
     qDebug() << "Disconnected from server";
     emit disconnectedFromServer();
-
 }
 
 void Client::error()
 {
-
     qDebug() << "Error: " << socket.errorString() << "closing socket";
 
     socket.close();
@@ -109,6 +99,7 @@ void Client::error()
         socket.waitForDisconnected();
     }
 
+    emit errorSignal(socket.errorString());
 }
 
 quint16 Client::port() const
@@ -135,5 +126,4 @@ void Client::setHost(const QHostAddress &newHost)
 bool Client::isConnected() const
 {
     return (socket.state() == QAbstractSocket::ConnectedState)? true : false;
-
 }
