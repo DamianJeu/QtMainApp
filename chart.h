@@ -20,7 +20,7 @@ public:
     void setXValue(quint16 newXValue);
 
 signals:
-    void  newMaxYDetected(double maxY);
+    void newMaxYDetected(double maxY);
     void newMinYDetected(double minY);
 
 public slots:
@@ -28,6 +28,10 @@ public slots:
     void clearChart();
     void changeSeries();
     void addNewSample(double point);
+    void setNewMaxY(double maxY);
+    void setNewMinY(double minY);
+
+    void addNewSample2(double point);
 
 
 private:
@@ -35,6 +39,7 @@ private:
 
     QChart *chart;
     QLineSeries *series;
+     QLineSeries *series2;
     QValueAxis *axisX;
     QValueAxis *axisY;
     QChartView *chartView;

@@ -42,7 +42,7 @@ private slots:
 
     void on_pushButtonStopData_clicked();
 
-    void receiveParsedData(const QString &data);
+    void receiveParsedData(ParsedData data);
 
     void on_pushButtonCleanLogs_clicked();
 
@@ -56,18 +56,31 @@ private slots:
 
     void on_checkBoxLowpassFilter_stateChanged(int arg1);
 
+    void newMaxYDetected(double maxY);
+    void newMinYDetected(double minY);
+
+
+    void on_doubleSpinBoxYMax_valueChanged(double arg1);
+
+    void on_doubleSpinBoxYMin_valueChanged(double arg1);
+
 private:
     Ui::MainWindow *ui;
 
+    quint8 firstSample;
 
     Client *client;
     QTimer *timer;
     DataParser *parser;
     Chart *chart;
+    Chart *chart2;
     FloorAlgorithm *floorAlgorithm;
 
     DataType dataType;
     bool lowpassFilterEnabled;
+
+    double lastFilteredData;
+
 
 
 };

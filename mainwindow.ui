@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1113</width>
+    <width>1554</width>
     <height>929</height>
    </rect>
   </property>
@@ -20,535 +20,495 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QGroupBox" name="groupBox_5">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>180</y>
-      <width>700</width>
-      <height>500</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>400</width>
-      <height>500</height>
-     </size>
-    </property>
-    <property name="title">
-     <string>Wykres</string>
-    </property>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0" colspan="2">
-      <widget class="QFrame" name="frameChart">
-       <property name="minimumSize">
-        <size>
-         <width>390</width>
-         <height>490</height>
-        </size>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::NoFrame</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QPushButton" name="pushButtonTemperature">
-       <property name="text">
-        <string>Temperatura</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QPushButton" name="pushButtonPressure">
-       <property name="text">
-        <string>Ciśnienie</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QGroupBox" name="groupBox_2">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>700</y>
-      <width>826</width>
-      <height>150</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>700</width>
-      <height>10</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>16777215</width>
-      <height>150</height>
-     </size>
-    </property>
-    <property name="title">
-     <string>Logs</string>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="0">
-      <widget class="QPushButton" name="pushButtonCleanLogs">
-       <property name="text">
-        <string>Clean</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QTextBrowser" name="textBrowser"/>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QGroupBox" name="groupBox_4">
-    <property name="geometry">
-     <rect>
-      <x>250</x>
-      <y>10</y>
-      <width>200</width>
-      <height>150</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>200</width>
-      <height>150</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>200</width>
-      <height>150</height>
-     </size>
-    </property>
-    <property name="title">
-     <string>Moduł przetwarzania danych</string>
-    </property>
-    <widget class="QSpinBox" name="spinBoxFrequency">
-     <property name="geometry">
-      <rect>
-       <x>141</x>
-       <y>72</y>
-       <width>47</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="maximum">
-      <number>1000</number>
-     </property>
-     <property name="value">
-      <number>100</number>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonStopData">
-     <property name="geometry">
-      <rect>
-       <x>65</x>
-       <y>72</y>
-       <width>47</width>
-       <height>24</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Stop</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonStartData">
-     <property name="geometry">
-      <rect>
-       <x>12</x>
-       <y>72</y>
-       <width>47</width>
-       <height>24</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Start</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_5">
-     <property name="geometry">
-      <rect>
-       <x>118</x>
-       <y>72</y>
-       <width>17</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Hz:</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBox_3">
-    <property name="geometry">
-     <rect>
-      <x>470</x>
-      <y>10</y>
-      <width>300</width>
-      <height>150</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>200</width>
-      <height>130</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>300</width>
-      <height>150</height>
-     </size>
-    </property>
-    <property name="title">
-     <string>Konfiguracja</string>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_4">
-     <item row="0" column="1">
-      <widget class="QCheckBox" name="checkBoxLowpassFilter">
-       <property name="text">
-        <string>Filtr dolnoprzepustowy</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Alfa :</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QDoubleSpinBox" name="doubleSpinBoxAlpha">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
+   <layout class="QGridLayout" name="gridLayout_6">
+    <item row="1" column="3" colspan="2">
+     <widget class="QGroupBox" name="groupBox_7">
+      <property name="minimumSize">
+       <size>
+        <width>700</width>
+        <height>550</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Filtr</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="0" colspan="2">
+        <widget class="QFrame" name="frameChartFilter">
+         <property name="minimumSize">
+          <size>
+           <width>660</width>
+           <height>490</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="4">
+     <widget class="QGroupBox" name="groupBox_6">
+      <property name="title">
+       <string>Ustawienia wykresu</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_5">
+       <item row="0" column="0">
+        <widget class="QLabel" name="labelMinY">
+         <property name="text">
+          <string>Detected min Y:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="labelMinYDisplay">
+         <property name="minimumSize">
+          <size>
+           <width>50</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>0</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>Set max Y:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QDoubleSpinBox" name="doubleSpinBoxYMax">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="decimals">
+          <number>6</number>
+         </property>
+         <property name="maximum">
+          <double>999999.999900000053458</double>
+         </property>
+         <property name="value">
+          <double>10.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="labelMaxY">
+         <property name="text">
+          <string>Detected max Y:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="labelMaxYDisplay">
+         <property name="minimumSize">
+          <size>
+           <width>50</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>0</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QLabel" name="label_13">
+         <property name="text">
+          <string>Set min Y:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QDoubleSpinBox" name="doubleSpinBoxYMin">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="decimals">
+          <number>6</number>
+         </property>
+         <property name="maximum">
+          <double>999999.999900000053458</double>
+         </property>
+         <property name="value">
+          <double>10.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QGroupBox" name="groupBox_4">
+      <property name="minimumSize">
+       <size>
+        <width>200</width>
+        <height>150</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>200</width>
+        <height>150</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Moduł przetwarzania danych</string>
+      </property>
+      <widget class="QSpinBox" name="spinBoxFrequency">
+       <property name="geometry">
+        <rect>
+         <x>141</x>
+         <y>72</y>
+         <width>47</width>
          <height>25</height>
-        </size>
-       </property>
-       <property name="decimals">
-        <number>6</number>
+        </rect>
        </property>
        <property name="maximum">
-        <double>9999.999900000000707</double>
+        <number>1000</number>
        </property>
        <property name="value">
-        <double>10.000000000000000</double>
+        <number>100</number>
        </property>
       </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_3">
+      <widget class="QPushButton" name="pushButtonStopData">
+       <property name="geometry">
+        <rect>
+         <x>65</x>
+         <y>72</y>
+         <width>47</width>
+         <height>24</height>
+        </rect>
+       </property>
        <property name="text">
-        <string>Czułość:</string>
+        <string>Stop</string>
        </property>
       </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QDoubleSpinBox" name="doubleSpinBoxSensitivity">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>25</height>
-        </size>
+      <widget class="QPushButton" name="pushButtonStartData">
+       <property name="geometry">
+        <rect>
+         <x>12</x>
+         <y>72</y>
+         <width>47</width>
+         <height>24</height>
+        </rect>
        </property>
-       <property name="decimals">
-        <number>6</number>
+       <property name="text">
+        <string>Start</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_5">
+       <property name="geometry">
+        <rect>
+         <x>118</x>
+         <y>72</y>
+         <width>17</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Hz:</string>
+       </property>
+      </widget>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="5">
+     <widget class="QGroupBox" name="groupBox_2">
+      <property name="minimumSize">
+       <size>
+        <width>700</width>
+        <height>10</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>150</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Logs</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <widget class="QPushButton" name="pushButtonCleanLogs">
+         <property name="text">
+          <string>Clean</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QTextBrowser" name="textBrowser"/>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="2" colspan="2">
+     <widget class="QGroupBox" name="groupBox_3">
+      <property name="minimumSize">
+       <size>
+        <width>200</width>
+        <height>130</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>300</width>
+        <height>150</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Konfiguracja</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="1">
+        <widget class="QCheckBox" name="checkBoxLowpassFilter">
+         <property name="text">
+          <string>Filtr dolnoprzepustowy</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Alfa :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QDoubleSpinBox" name="doubleSpinBoxAlpha">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="decimals">
+          <number>6</number>
+         </property>
+         <property name="maximum">
+          <double>9999.999900000000707</double>
+         </property>
+         <property name="value">
+          <double>10.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Czułość:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QDoubleSpinBox" name="doubleSpinBoxSensitivity">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="decimals">
+          <number>6</number>
+         </property>
+         <property name="maximum">
+          <double>10000.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>100.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QPushButton" name="pushButtonAlgorithmUpdate">
+         <property name="text">
+          <string>Aktualizuj</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QPushButton" name="pushButtonAlgorithmReset">
+         <property name="text">
+          <string>Reset</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="3">
+     <widget class="QGroupBox" name="groupBox_5">
+      <property name="minimumSize">
+       <size>
+        <width>700</width>
+        <height>550</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Wykres</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0" colspan="2">
+        <widget class="QFrame" name="frameChart">
+         <property name="minimumSize">
+          <size>
+           <width>390</width>
+           <height>490</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="pushButtonPressure">
+         <property name="text">
+          <string>Ciśnienie</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="pushButtonTemperature">
+         <property name="text">
+          <string>Temperatura</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="minimumSize">
+       <size>
+        <width>200</width>
+        <height>150</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>200</width>
+        <height>150</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Client</string>
+      </property>
+      <widget class="QSpinBox" name="spinBoxPort">
+       <property name="geometry">
+        <rect>
+         <x>108</x>
+         <y>60</y>
+         <width>80</width>
+         <height>22</height>
+        </rect>
        </property>
        <property name="maximum">
-        <double>10000.000000000000000</double>
+        <number>65535</number>
        </property>
        <property name="value">
-        <double>100.000000000000000</double>
+        <number>1234</number>
        </property>
       </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QPushButton" name="pushButtonAlgorithmUpdate">
+      <widget class="QPushButton" name="pushButtonConnect">
+       <property name="geometry">
+        <rect>
+         <x>12</x>
+         <y>88</y>
+         <width>90</width>
+         <height>22</height>
+        </rect>
+       </property>
        <property name="text">
-        <string>Aktualizuj</string>
+        <string>Connect</string>
        </property>
       </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QPushButton" name="pushButtonAlgorithmReset">
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>12</x>
+         <y>31</y>
+         <width>48</width>
+         <height>16</height>
+        </rect>
+       </property>
        <property name="text">
-        <string>Reset</string>
+        <string>Server IP:</string>
        </property>
       </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QGroupBox" name="groupBox">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>10</y>
-      <width>200</width>
-      <height>150</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>200</width>
-      <height>150</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>200</width>
-      <height>150</height>
-     </size>
-    </property>
-    <property name="title">
-     <string>Client</string>
-    </property>
-    <widget class="QSpinBox" name="spinBoxPort">
-     <property name="geometry">
-      <rect>
-       <x>108</x>
-       <y>60</y>
-       <width>80</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="maximum">
-      <number>65535</number>
-     </property>
-     <property name="value">
-      <number>1234</number>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonConnect">
-     <property name="geometry">
-      <rect>
-       <x>12</x>
-       <y>88</y>
-       <width>90</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Connect</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>12</x>
-       <y>31</y>
-       <width>48</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Server IP:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_4">
-     <property name="geometry">
-      <rect>
-       <x>12</x>
-       <y>60</y>
-       <width>22</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Port</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEditIp">
-     <property name="geometry">
-      <rect>
-       <x>76</x>
-       <y>31</y>
-       <width>112</width>
-       <height>23</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton">
-     <property name="geometry">
-      <rect>
-       <x>12</x>
-       <y>116</y>
-       <width>176</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Disconnect</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonLocalHost">
-     <property name="geometry">
-      <rect>
-       <x>108</x>
-       <y>88</y>
-       <width>80</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>LocalHost</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBox_6">
-    <property name="geometry">
-     <rect>
-      <x>780</x>
-      <y>260</y>
-      <width>221</width>
-      <height>211</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Ustawienia wykresu</string>
-    </property>
-    <widget class="QLabel" name="labelMaxY">
-     <property name="geometry">
-      <rect>
-       <x>12</x>
-       <y>60</y>
-       <width>86</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Detected max Y:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="labelMinY">
-     <property name="geometry">
-      <rect>
-       <x>12</x>
-       <y>31</y>
-       <width>84</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Detected min Y:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_8">
-     <property name="geometry">
-      <rect>
-       <x>114</x>
-       <y>31</y>
-       <width>16</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_9">
-     <property name="geometry">
-      <rect>
-       <x>114</x>
-       <y>60</y>
-       <width>16</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_11">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>90</y>
-       <width>96</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Set max Y:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_13">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>120</y>
-       <width>96</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Set min Y:</string>
-     </property>
-    </widget>
-    <widget class="QDoubleSpinBox" name="doubleSpinBoxYMax">
-     <property name="geometry">
-      <rect>
-       <x>70</x>
-       <y>80</y>
-       <width>146</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>25</height>
-      </size>
-     </property>
-     <property name="decimals">
-      <number>6</number>
-     </property>
-     <property name="maximum">
-      <double>999999.999900000053458</double>
-     </property>
-     <property name="value">
-      <double>10.000000000000000</double>
-     </property>
-    </widget>
-    <widget class="QDoubleSpinBox" name="doubleSpinBoxYMin">
-     <property name="geometry">
-      <rect>
-       <x>70</x>
-       <y>120</y>
-       <width>146</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>25</height>
-      </size>
-     </property>
-     <property name="decimals">
-      <number>6</number>
-     </property>
-     <property name="maximum">
-      <double>999999.999900000053458</double>
-     </property>
-     <property name="value">
-      <double>10.000000000000000</double>
-     </property>
-    </widget>
-   </widget>
+      <widget class="QLabel" name="label_4">
+       <property name="geometry">
+        <rect>
+         <x>12</x>
+         <y>60</y>
+         <width>22</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Port</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEditIp">
+       <property name="geometry">
+        <rect>
+         <x>76</x>
+         <y>31</y>
+         <width>112</width>
+         <height>23</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>12</x>
+         <y>116</y>
+         <width>176</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Disconnect</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButtonLocalHost">
+       <property name="geometry">
+        <rect>
+         <x>108</x>
+         <y>88</y>
+         <width>80</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>LocalHost</string>
+       </property>
+      </widget>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1113</width>
+     <width>1554</width>
      <height>21</height>
     </rect>
    </property>

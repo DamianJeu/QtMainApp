@@ -1,27 +1,5 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-#include <QRegularExpression>
-#include <QRegularExpressionMatch>
-
-
-
-double extractField(const QString &data, const QString &fieldName) {
-
-    QString pattern = fieldName + R"(\s*:\s*([\d\.]+))";
-    QRegularExpression regex(pattern);
-
-
-    QRegularExpressionMatch match = regex.match(data);
-
-
-    if (match.hasMatch()) {
-        QString fieldValue = match.captured(1);
-        return fieldValue.toDouble();
-    }
-
-    return -1;
-}
-
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -38,7 +16,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     QHBoxLayout *layout = new QHBoxLayout(ui->frameChart);
 
+    QHBoxLayout *layout2 = new QHBoxLayout(ui->frameChartFilter);
+
     chart = new Chart(this, layout );
+    chart2 = new Chart(this, layout2 );
 
 
     connect(timer, &QTimer::timeout, this, &MainWindow::sendData, Qt::AutoConnection);
@@ -54,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+
 
 }
 
@@ -132,14 +114,12 @@ void MainWindow::on_pushButtonStopData_clicked()
 
 
 //SRC:   218 2021-10-17 08:16:51.618 UWB CNT: 10, DSTR: false,
-//MODE: MOV, EXC: 0 WID:   222 GID:   228 BAT:  91 PRS: 101379
+//MODE: MOV, EXC: 0 WID:   222 GID:   228 BAT:  91 PRS: 101379  <<<<1013,79
 //TMP: 6.7 TS: 1021106004569 RSSI: -98 FPPL: -109 CSQ: 0
 
-void MainWindow::receiveParsedData(const QString &data)
+void MainWindow::receiveParsedData(ParsedData data)
 {
-    ui->textBrowser->append(data);
-
-    double lastFilteredData;
+    ui->textBrowser->append(QString::number(data.pressure) + "[Pa], " + QString::number(data.temperature) + "[°C] ");
 
 
     if(dataType == DataType::Pressure)
@@ -149,17 +129,19 @@ void MainWindow::receiveParsedData(const QString &data)
             if(!firstSample)
             {
                 firstSample = 1;
-                lastFilteredData = extractField(data, "PRS");
+                lastFilteredData = data.pressure;
                 qDebug() << "First sample:" << lastFilteredData;
             }
 
-            lastFilteredData = floorAlgorithm->calculateLowPassFilter(extractField(data, "PRS"),lastFilteredData);
+            lastFilteredData = floorAlgorithm->calculateLowPassFilter(data.pressure,lastFilteredData);
 
-            chart->addNewSample(lastFilteredData);
+            chart->addNewSample2(lastFilteredData);
+            chart2->addNewSample(lastFilteredData);
+            chart->addNewSample(data.pressure);
         }
         else
         {
-            chart->addNewSample(extractField(data, "PRS"));
+            chart->addNewSample(data.pressure);
         }
 
     }
@@ -170,17 +152,19 @@ void MainWindow::receiveParsedData(const QString &data)
             if(!firstSample)
             {
                 firstSample = 1;
-                lastFilteredData = extractField(data, "TMP");
+                lastFilteredData = data.temperature;
                 qDebug() << "First sample:" << lastFilteredData;
             }
 
-            lastFilteredData = floorAlgorithm->calculateLowPassFilter(extractField(data, "TMP"),lastFilteredData);
+            lastFilteredData = floorAlgorithm->calculateLowPassFilter(data.temperature,lastFilteredData);
 
-            chart->addNewSample(lastFilteredData);
+            chart->addNewSample2(lastFilteredData);
+            chart2->addNewSample(lastFilteredData);
+            chart->addNewSample(data.temperature);
         }
         else
         {
-            chart->addNewSample(extractField(data, "TMP"));
+            chart->addNewSample(data.temperature);
         }
 
     }
@@ -200,7 +184,10 @@ void MainWindow::on_pushButtonCleanLogs_clicked()
 void MainWindow::on_pushButtonPressure_clicked()
 {
     firstSample = 0;
+    lastFilteredData=0;
+
     chart->changeSeries();
+    chart2->changeSeries();
     dataType = DataType::Pressure;
 
 }
@@ -209,7 +196,9 @@ void MainWindow::on_pushButtonPressure_clicked()
 void MainWindow::on_pushButtonTemperature_clicked()
 {
     firstSample = 0;
+    lastFilteredData=0;
     chart->changeSeries();
+    chart2->changeSeries();
     dataType = DataType::Temperature;
 }
 
@@ -230,43 +219,50 @@ void MainWindow::on_pushButtonAlgorithmUpdate_clicked()
 void MainWindow::on_pushButtonAlgorithmReset_clicked()
 {
     firstSample = 0;
+    lastFilteredData=0;
 }
 
 
 void MainWindow::on_checkBoxLowpassFilter_stateChanged(int arg1)
 {
 
+    firstSample = 0;
+    lastFilteredData=0;
+
     if(ui->checkBoxLowpassFilter->isChecked())
     {
-        firstSample = 0;
         lowpassFilterEnabled = true;
         qDebug() << "Lowpass filter enabled";
     }
     else
     {
-        firstSample = 0;
         lowpassFilterEnabled = false;
         qDebug() << "Lowpass filter disabled";
     }
+
+
 }
 
 void MainWindow::newMaxYDetected(double maxY)
 {
-    ui->labelMaxY->setText(QString::number(maxY));
+    ui->labelMaxYDisplay->setText(QString::number(maxY));
 }
 
 void MainWindow::newMinYDetected(double minY)
 {
-    ui->labelMinY->setText(QString::number(minY));
+    ui->labelMinYDisplay->setText(QString::number(minY));
 }
 
-void MainWindow::setNewMaxY(double maxY)
-{
 
+
+void MainWindow::on_doubleSpinBoxYMax_valueChanged(double arg1)
+{
+    chart->setNewMaxY(arg1);
 }
 
-void MainWindow::setNewMinY(double minY)
-{
 
+void MainWindow::on_doubleSpinBoxYMin_valueChanged(double arg1)
+{
+    chart->setNewMinY(arg1);
 }
 

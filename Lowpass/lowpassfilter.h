@@ -18,26 +18,17 @@ class LowPassFilter : public QObject
 public:
     explicit LowPassFilter(QObject *parent = nullptr);
 
-
-
 signals:
 
 
 public slots:
 
-
     void changeAlpha(double newAlpha);
-
-
     double calculateLowPassFilter(double newValue , double previousFilteredValue);
-
-
-
 
 protected:
 
      double alpha;
-
 
 };
 
