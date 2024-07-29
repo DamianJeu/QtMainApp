@@ -4,6 +4,13 @@
 #include <QObject>
 #include "../Lowpass/lowpassfilter.h"
 
+
+/**
+ * @class FloorAlgorithm
+ * @brief Handling pressure changes and floor change algorithm
+ *
+ * This class is responsible for detecting floor changes based on pressure changes.
+ */
 class FloorAlgorithm :public LowPassFilter
 {
     Q_OBJECT
@@ -12,18 +19,12 @@ public:
     ~FloorAlgorithm();
 
     bool detectFloorChange(double previousPressure, double currentPressure);
-
     double getSensitivity() const;
     void setSensitivity(double newSensitivity);
 
 public slots:
 
-
-
-
 private:
-
-
 double sensitivity;
 
 };

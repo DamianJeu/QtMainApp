@@ -1,6 +1,8 @@
 #include "client.h"
 
-
+/**
+ * @brief Constructor Client class.
+ */
 Client::Client(const QString &host, quint16 port, QObject *parent)
     : QObject(parent), m_host(host), m_port(port), socket(this)
 {
@@ -13,7 +15,9 @@ Client::Client(const QString &host, quint16 port, QObject *parent)
     socket.connectToHost(host, port);
 }
 
-
+/**
+ * @brief Constructor Client class.
+ */
 Client::Client(QObject *parent)
     : QObject(parent), socket(this)
 {
@@ -24,6 +28,9 @@ Client::Client(QObject *parent)
 
 }
 
+/**
+ * @brief Deconstructor Client class.
+ */
 void Client::connectToServer()
 {
 
@@ -37,6 +44,9 @@ void Client::connectToServer()
 
 }
 
+/**
+ * @brief Disconnects from server.
+ */
 void Client::disconnectFromServer()
 {
 
@@ -51,6 +61,11 @@ void Client::disconnectFromServer()
 
 }
 
+/**
+ * @brief Sends data to server.
+ *
+ * @param QByteArray data Data to send
+ */
 void Client::sendDataToServer(const QByteArray &data)
 {
     if(socket.state() == QAbstractSocket::UnconnectedState)
@@ -62,32 +77,38 @@ void Client::sendDataToServer(const QByteArray &data)
     socket.write(data);
     socket.flush();
     socket.waitForBytesWritten();
-  //  qDebug() << "Data sent: " << data;
 }
 
-
-
+/**
+ * @brief Reads data from server.
+ */
 void Client::readyRead()
 {
     QByteArray data = socket.readAll();
-  //  qDebug() << "Data received: " << data;
-    //emit signal with data received
     emit dataReceived(data);
-
 }
 
+/**
+ * @brief Connected to server.
+ */
 void Client::connected()
 {
     qDebug() << "Connected to server";
     emit connectedToServer();
 }
 
+/**
+ * @brief Disconnected from server.
+ */
 void Client::disconnected()
 {
     qDebug() << "Disconnected from server";
     emit disconnectedFromServer();
 }
 
+/**
+ * @brief Error.
+ */
 void Client::error()
 {
     qDebug() << "Error: " << socket.errorString() << "closing socket";
@@ -102,27 +123,49 @@ void Client::error()
     emit errorSignal(socket.errorString());
 }
 
+/**
+ * @brief Returns port.
+ * @return quint16 Port
+ */
 quint16 Client::port() const
 {
     return m_port;
 }
 
+/**
+ * @brief Sets port.
+ *
+ * @param quint16 newPort New port
+ */
 void Client::setPort(quint16 newPort)
 {
     m_port = newPort;
 }
 
+/**
+ * @brief Returns host.
+ * @return QHostAddress Host
+ */
 QHostAddress Client::host() const
 {
     return m_host;
 }
 
+/**
+ * @brief Sets host.
+ *
+ * @param QHostAddress newHost New host
+ */
 void Client::setHost(const QHostAddress &newHost)
 {
     m_host = newHost;
 
 }
 
+/**
+ * @brief Returns true if connected, false otherwise.
+ * @return bool true if connected, false otherwise
+ */
 bool Client::isConnected() const
 {
     return (socket.state() == QAbstractSocket::ConnectedState)? true : false;

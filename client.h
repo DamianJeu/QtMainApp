@@ -5,6 +5,11 @@
 #include <QTcpSocket>
 
 
+/**
+ * @brief The Client class
+ *
+ * This class is responsible for creating a client that can connect to a server.
+ */
 class Client : public QObject
 {
     Q_OBJECT
@@ -14,14 +19,11 @@ public:
 
     QHostAddress host() const;
     void setHost(const QHostAddress &newHost);
-
     bool isConnected() const;
-
     quint16 port() const;
     void setPort(quint16 newPort);
 
 signals:
-
     void dataReceived(const QByteArray &data);
     void disconnectedFromServer();
     void connectedToServer();
@@ -29,23 +31,17 @@ signals:
 
 
 public slots:
-
-
     void connectToServer();
     void disconnectFromServer();
     void sendDataToServer(const QByteArray &data);
 
-
-
 private slots:
-
     void readyRead();
     void connected();
     void disconnected();
     void error();
+
 private:
-
-
     QTcpSocket socket;
     QHostAddress m_host;
     quint16 m_port;

@@ -3,15 +3,11 @@
 
 #include <QObject>
 
-
-//double newValue
-
-// double lowPassFilter(double previousFilteredValue, double newValue, double timeConstant, double deltaTime) {
-//     double alpha = deltaTime / (timeConstant + deltaTime);
-//     return previousFilteredValue + alpha * (newValue - previousFilteredValue);
-// }
-
-
+/**
+ * @brief The LowPassFilter class
+ *
+ * This class is responsible for filtering data using a low pass filter.
+ */
 class LowPassFilter : public QObject
 {
     Q_OBJECT

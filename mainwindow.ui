@@ -80,7 +80,7 @@
           </size>
          </property>
          <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
+          <enum>QFrame::Shape::NoFrame</enum>
          </property>
         </widget>
        </item>
@@ -224,7 +224,7 @@
           <double>9999.999900000000707</double>
          </property>
          <property name="value">
-          <double>0.005000000000000</double>
+          <double>0.050000000000000</double>
          </property>
         </widget>
        </item>
@@ -250,7 +250,7 @@
           <double>10000.000000000000000</double>
          </property>
          <property name="value">
-          <double>36.000000000000000</double>
+          <double>35.000000000000000</double>
          </property>
         </widget>
        </item>
@@ -334,7 +334,7 @@
           </size>
          </property>
          <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
+          <enum>QFrame::Shape::NoFrame</enum>
          </property>
         </widget>
        </item>
