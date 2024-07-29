@@ -29,8 +29,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(client, &Client::disconnectedFromServer, this, &MainWindow::clientDisconnected, Qt::AutoConnection);
     connect(parser, &DataParser::endOfData, this, &MainWindow::on_pushButtonStopData_clicked, Qt::DirectConnection);
     connect(client, &Client::errorSignal, this, &MainWindow::addErrorToLogs, Qt::AutoConnection);
-
-
 }
 
 MainWindow::~MainWindow()
@@ -45,7 +43,6 @@ void MainWindow::on_pushButtonConnect_clicked()
     client->connectToServer();
 }
 
-
 void MainWindow::on_pushButtonLocalHost_clicked()
 {
     client->setHost(QHostAddress::LocalHost);
@@ -54,7 +51,6 @@ void MainWindow::on_pushButtonLocalHost_clicked()
     ui->lineEditIp->setText(client->host().toString());
     ui->spinBoxPort->setValue(client->port());
 }
-
 
 void MainWindow::on_pushButtonStartData_clicked()
 {
@@ -82,7 +78,6 @@ void MainWindow::on_pushButtonStartData_clicked()
     }
 }
 
-
 void MainWindow::on_pushButton_clicked()
 {
     client->disconnectFromServer();
@@ -90,9 +85,9 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::sendData()
 {
+    //i2c driver would be added, need to change
     client->sendDataToServer("Give me data!");
 }
-
 
 void MainWindow::on_pushButtonStopData_clicked()
 {
@@ -108,7 +103,6 @@ void MainWindow::on_pushButtonStopData_clicked()
         qDebug() << "Timer is not active";
     }
 }
-
 
 //SRC:   218 2021-10-17 08:16:51.618 UWB CNT: 10, DSTR: false,
 //MODE: MOV, EXC: 0 WID:   222 GID:   228 BAT:  91 PRS: 101379  <<<<1013,79
@@ -190,12 +184,10 @@ void MainWindow::receiveParsedData(ParsedData data)
     }
 }
 
-
 void MainWindow::on_pushButtonCleanLogs_clicked()
 {
     ui->textBrowser->clear();
 }
-
 
 void MainWindow::on_pushButtonPressure_clicked()
 {
@@ -208,7 +200,6 @@ void MainWindow::on_pushButtonPressure_clicked()
     dataType = DataType::Pressure;
 }
 
-
 void MainWindow::on_pushButtonTemperature_clicked()
 {
     firstSample = 0;
@@ -218,7 +209,6 @@ void MainWindow::on_pushButtonTemperature_clicked()
     chart2->changeSeries();
     dataType = DataType::Temperature;
 }
-
 
 void MainWindow::on_pushButtonAlgorithmUpdate_clicked()
 {
@@ -231,14 +221,12 @@ void MainWindow::on_pushButtonAlgorithmUpdate_clicked()
     qDebug() << "Alpha:" << alpha;
 }
 
-
 void MainWindow::on_pushButtonAlgorithmReset_clicked()
 {
     firstSample = 0;
     lastFilteredData=0;
     lastAlgorithmData = 0;
 }
-
 
 void MainWindow::on_checkBoxLowpassFilter_stateChanged(int arg1)
 {
@@ -297,9 +285,8 @@ void MainWindow::addErrorToLogs(const QString &error)
 {
     ui->textBrowser->setTextColor(QColorConstants::Red);
     ui->textBrowser->append(error);
+    ui->textBrowser->setTextColor(QColorConstants::White);
 }
-
-
 
 void MainWindow::stopTimer()
 {
@@ -317,7 +304,6 @@ void MainWindow::startTimer(quint16 interval)
 
 void MainWindow::addFloorToLogs(double pressure, double filteredPressure, QString & data)
 {
-
     if(pressure<0)
     {
         qDebug() << "Negative pressure detected!";
@@ -334,12 +320,10 @@ void MainWindow::addFloorToLogs(double pressure, double filteredPressure, QStrin
     ui->textBrowserFloors->append(floorChangeMsg);
 }
 
-
 void MainWindow::on_pushButtonCleanLogsFloor_clicked()
 {
     ui->textBrowserFloors->clear();
 }
-
 
 void MainWindow::on_pushButtonSimPtrReset_clicked()
 {
