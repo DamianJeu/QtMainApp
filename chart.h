@@ -7,8 +7,11 @@
 #include <QChartView>
 #include <QHBoxLayout>
 
-
-
+/**
+ * @brief The Chart class
+ *
+ * This class is responsible for creating the chart and its series.
+ */
 class Chart : public QWidget
 {
     Q_OBJECT
@@ -30,24 +33,19 @@ public slots:
     void addNewSample(double point);
     void setNewMaxY(double maxY);
     void setNewMinY(double minY);
-
     void addNewSample2(double point);
-
     void addScatterSample(double y);
 
 
 private:
-
-
     QChart *chart;
     QLineSeries *series;
-     QLineSeries *series2;
+    QLineSeries *series2;
     QValueAxis *axisX;
     QValueAxis *axisY;
     QChartView *chartView;
     QHBoxLayout *layout;
     QScatterSeries *scatterSeries;
-
 
     quint64 m_xValue;
     quint64 m_yValue;

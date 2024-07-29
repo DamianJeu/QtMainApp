@@ -4,12 +4,22 @@
 #include <QObject>
 #include <QString>
 
+/**
+ * @brief The ParsedData struct
+ *
+ * This struct is responsible for storing the parsed data.
+ */
 struct ParsedData {
     double pressure;
     double temperature;
     QString dataTime;
 };
 
+/**
+ * @brief The DataParser class
+ *
+ * This class is responsible for parsing the data received from the server.
+ */
 class DataParser : public QObject
 {
     Q_OBJECT

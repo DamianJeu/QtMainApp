@@ -63,12 +63,6 @@ private slots:
     void newMaxYDetected(double maxY);
     void newMinYDetected(double minY);
 
-
-    void on_doubleSpinBoxYMax_valueChanged(double arg1);
-
-    void on_doubleSpinBoxYMin_valueChanged(double arg1);
-
-
     void clientConnected();
     void clientDisconnected();
     void addErrorToLogs(const QString &error);

@@ -13,6 +13,7 @@ class LowPassFilter : public QObject
     Q_OBJECT
 public:
     explicit LowPassFilter(QObject *parent = nullptr);
+    ~LowPassFilter();
 
 signals:
 
